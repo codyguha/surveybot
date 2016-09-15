@@ -54,7 +54,6 @@
       width: 50%;
       text-align: center;
     }
-    /* .control-buttons{padding-right:12px; padding-left:12px;}*/
     
     #refresh {
       float: left;
@@ -146,7 +145,7 @@
 
     var commands1 = {
       '*v survey': function() {
-        speak("Great, Lets get started... Question 1: Do you like our drip coffee ?");
+        speak("Great, Lets get started... Question 1: Are you a coffee drinker ?");
         annyang.addCommands(responses1);
         annyang.removeCommands('*v survey');
       }
@@ -160,7 +159,7 @@
     var responses6 = { 'agree': answers4, 'disagree': answers4, '*v agree': answers4, '*v disagree': answers4, 'undecided': answers4 }
 
     function answers1() {
-      speak("Thank you for your input. shall I continue ?");
+      speak("Great. I have a few questions for you. shall I continue ?");
       annyang.removeCommands(['Yes', 'Yeah', 'No', 'Nope', '*v yes', '*v No', '*v yeah', 'yes *v', 'yeah *v','sure']);
       annyang.addCommands(responses2);
     };
