@@ -159,7 +159,7 @@
     var responses6 = { 'agree': answers4, 'disagree': answers4, '*v agree': answers4, '*v disagree': answers4, 'undecided': answers4 }
 
     function answers1() {
-      speak("Great. I have a few questions for you. Would you like to continue ?");
+      speak("Great. I have a few questions for you... Would you like to continue ?");
       annyang.removeCommands(['Yes', 'Yeah', 'No', 'Nope', '*v yes', '*v No', '*v yeah', 'yes *v', 'yeah *v','sure']);
       annyang.addCommands(responses2);
     };
@@ -178,13 +178,13 @@
     }
 
     function answers3(v) {
-      speak("What is your favorite beverage at " + v + " ?");
+      speak("and What is your favorite beverage at " + v + " ?");
       annyang.removeCommands('*v');
       annyang.addCommands(responses4);
     }
 
     function answers3a() {
-      speak("Thank you for your input. shall I continue ?");
+      speak("Thank you for your input. one more question... shall I continue ?");
       annyang.removeCommands('*a');
       annyang.addCommands(responses5);
     }
