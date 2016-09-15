@@ -152,10 +152,10 @@
     };
 
     var responses1 = { 'Yes': answers1, 'Yeah': answers1, 'No': answers1, 'Nope': answers1, '*v yes': answers1, 'yes *v': answers1, 'yeah *v': answers1,'*v No': answers1, '*v yeah': answers1, 'sure':answers1 }
-    var responses2 = { 'Yes': answers2y, 'Yeah': answers2y, 'continue': answers2y, '*v continue': answers2y, 'No': answers2n, 'Nope': answers2n, '*v No': answers2n, 'No *v': answers2n, 'sure': answers2y }
+    var responses2 = { 'Yes': answers2y, 'Yeah': answers2y, 'continue': answers2y, '*v continue': answers2y, 'continue *v': answers2y, 'No': answers2n, 'Nope': answers2n, '*v No': answers2n, 'No *v': answers2n, 'sure': answers2y }
     var responses3 = { '*v': answers3 }
     var responses4 = { '*a': answers3a }
-    var responses5 = { 'Yes': answers3y, 'Yeah': answers3y, 'sure': answers3y, 'continue': answers3y, '*v continue': answers3y, 'No': answers2n, 'Nope': answers2n, '*v No': answers2n, 'No *v': answers2n }
+    var responses5 = { 'Yes': answers3y, 'Yeah': answers3y, 'sure': answers3y, 'continue': answers3y,'continue *v': answers3y, '*v continue': answers3y, 'No': answers2n, 'Nope': answers2n, '*v No': answers2n, 'No *v': answers2n }
     var responses6 = { 'agree': answers4, 'disagree': answers4, '*v agree': answers4, '*v disagree': answers4, 'undecided': answers4 }
 
     function answers1() {
@@ -171,7 +171,7 @@
     }
 
     function answers2n() {
-      speak("Okay ! Thank you for your time");
+      speak("Okay ! Thank you for your time. goodbye.");
       annyang.removeCommands(['Yes', 'Yeah', 'No', 'Nope', '*v yes', '*v No', '*v yeah','*v continue', 'continue', 'sure', 'No *v']);
       annyang.abort();
       stop();
@@ -203,8 +203,7 @@
 
     // say a message
     function speak(text, callback) {
-
-          
+    
       var u = new SpeechSynthesisUtterance();    
       u.text = text;    
       u.lang = 'en-US';
