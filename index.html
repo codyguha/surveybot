@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VOICE COMMAND SURVEY TEST</title>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.5.0/annyang.min.js"></script>
+  <style>
+    body {
+      margin-right: 5%;
+      margin-left: 5%;
+    }
+    
+    #menubar {
+      padding-top: 20px;
+      border: 2px;
+      height: 50px;
+      border-color: black;
+      width: 100%;
+      margin-bottom: 55px;
+    }
+    
+    #vc-logo {
+      float: left;
+    }
+    
+    #action {
+      float: right;
+    }
+    
+    #line1 {
+      margin-top: 0px;
+      width: 87%;
+      height: 1px;
+      background-color: grey;
+    }
+    
+    #line2 {
+      margin-top: 12px;
+      width: 1px;
+      height: 24px;
+      background-color: grey;
+    }
+    
+    .center {
+      margin-top: 24px;
+      clear: both;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    #controls {
+      width: 50%;
+      text-align: center;
+    }
+    /* .control-buttons{padding-right:12px; padding-left:12px;}*/
+    
+    #refresh {
+      float: left;
+    }
+    
+    #play {
+      float: right;
+    }
+    
+    #pause {
+      margin: 0 auto;
+      display: inline-block;
+    }
+    
+    #voice-list {
+      margin-top: 72px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="menubar">
+    <img src="https://raw.githubusercontent.com/codyguha/voice/master/bot%20images/VC_labs_logo.png" id="vc-logo">
+    <img src="https://raw.githubusercontent.com/codyguha/voice/master/bot%2520images/Actions_Black.png" id="action" />
+  </div>
+  <form>
+    <img src="https://raw.githubusercontent.com/codyguha/voice/master/bot%20images/Logo_black.png" id="surveybot-logo" class="center">
+    <img src="https://raw.githubusercontent.com/codyguha/voice/master/bot%20images/cartoon1.png" id="robot" class="center">
+    <div id="line2" class="center">
+
+    </div>
+    <div id="line1" class="center">
+
+    </div>
+    <div id="controls" class="center">
+      <img onclick="window.location.reload()" src="https://raw.githubusercontent.com/codyguha/voice/master/bot%2520images/Refresh_black.png" id="refresh" class="control-buttons" />
+      <img onclick="start()" src="https://raw.githubusercontent.com/codyguha/voice/master/bot%20images/Play_black.png" id="play" class="control-buttons" />
+      <img onclick="stop()" src="https://raw.githubusercontent.com/codyguha/voice/master/bot%2520images/Pause_blue.png" id="pause" class="control-buttons" />
+    </div>
+
+
+    <select id="voice-list" class="center">
+        </select>
+  </form>
+  <script>
+    annyang.debug();
+
+    function stop() {
+      document.getElementById("play").src = "https://raw.githubusercontent.com/codyguha/voice/master/bot%20images/Play_black.png";
+      document.getElementById("pause").src = "https://raw.githubusercontent.com/codyguha/voice/master/bot%2520images/Pause_blue.png";
+      annyang.abort()
+    };
+
+    function start() {
+      document.getElementById("play").src = "https://raw.githubusercontent.com/codyguha/voice/master/bot%20images/Play_blue.png";
+      document.getElementById("pause").src = "https://raw.githubusercontent.com/codyguha/voice/master/bot%2520images/Pause_black.png";
+      annyang.addCommands(commands1);
+      speak("welcome, what can I help you with today ?");
+    };
+
+    var synth = window.speechSynthesis;
+    var inputForm = document.querySelector('form');
+    var inputTxt = document.querySelector('.txt');
+    var voiceSelect = document.querySelector('#voice-list');
+
+    var voices = [];
+
+    function populateVoiceList() {
+      voices = synth.getVoices();
+
+      for (i = 0; i < voices.length; i++) {
+        var option = document.createElement('option');
+        option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+
+        if (voices[i].default) {
+          option.textContent += ' -- DEFAULT';
+        }
+
+        option.setAttribute('data-lang', voices[i].lang);
+        option.setAttribute('data-name', voices[i].name);
+        voiceSelect.appendChild(option);
+      }
+    }
+
+    populateVoiceList();
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+      speechSynthesis.onvoiceschanged = populateVoiceList;
+    }
+
+    var commands1 = {
+      '*v survey': function() {
+        speak("Great, Lets get started... Question 1: Do you like our drip coffee ?");
+        annyang.addCommands(responses1);
+        annyang.removeCommands('*v survey');
+      }
+    };
+
+    var responses1 = { 'Yes': answers1, 'Yeah': answers1, 'No': answers1, 'Nope': answers1, '*v yes': answers1, 'yes *v': answers1, 'yeah *v': answers1,'*v No': answers1, '*v yeah': answers1, 'sure':answers1 }
+    var responses2 = { 'Yes': answers2y, 'Yeah': answers2y, 'continue': answers2y, '*v continue': answers2y, 'No': answers2n, 'Nope': answers2n, '*v No': answers2n, 'No *v': answers2n, 'sure': answers2y }
+    var responses3 = { '*v': answers3 }
+    var responses4 = { '*a': answers3a }
+    var responses5 = { 'Yes': answers3y, 'Yeah': answers3y, 'sure': answers3y, 'continue': answers3y, '*v continue': answers3y, 'No': answers2n, 'Nope': answers2n, '*v No': answers2n, 'No *v': answers2n }
+    var responses6 = { 'agree': answers4, 'disagree': answers4, '*v agree': answers4, '*v disagree': answers4, 'undecided': answers4 }
+
+    function answers1() {
+      speak("Thank you for your input. shall I continue ?");
+      annyang.removeCommands(['Yes', 'Yeah', 'No', 'Nope', '*v yes', '*v No', '*v yeah', 'yes *v', 'yeah *v','sure']);
+      annyang.addCommands(responses2);
+    };
+
+    function answers2y() {
+      speak("Okay ! Question 2: What is your favorite brand of coffee ?");
+      annyang.removeCommands(['Yes', 'Yeah', 'No', 'Nope', '*v yes', '*v No', '*v yeah','*v continue', 'continue', 'sure', 'No *v']);
+      annyang.addCommands(responses3);
+    }
+
+    function answers2n() {
+      speak("Okay ! Thank you for your time");
+      annyang.removeCommands(['Yes', 'Yeah', 'No', 'Nope', '*v yes', '*v No', '*v yeah','*v continue', 'continue', 'sure', 'No *v']);
+      annyang.abort();
+      stop();
+    }
+
+    function answers3(v) {
+      speak("What is your favorite beverage at " + v + " ?");
+      annyang.removeCommands('*v');
+      annyang.addCommands(responses4);
+    }
+
+    function answers3a() {
+      speak("Thank you for your input. shall I continue ?");
+      annyang.removeCommands('*a');
+      annyang.addCommands(responses5);
+    }
+
+    function answers3y() {
+      speak("Okay ! Question 3: Do you agree or disagree with this statement... I should get a free coffee for completing this survey");
+      annyang.removeCommands(['Yes', 'Yeah', 'No', 'Nope', '*v yes', '*v No', '*v yeah','*v continue', 'continue', 'sure', 'No *v']);
+      annyang.addCommands(responses6);
+    }
+
+    function answers4() {
+      speak("Thank you for your responses ! That is all for now");
+      annyang.removeCommands(['agree', 'disagree', '*v agree', '*v disagree', 'undecided']);
+      stop();
+    }
+
+    // say a message
+    function speak(text, callback) {
+
+          
+      var u = new SpeechSynthesisUtterance();    
+      u.text = text;    
+      u.lang = 'en-US';
+
+      var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+      for (i = 0; i < voices.length; i++) {
+        if (voices[i].name === selectedOption) {
+          u.voice = voices[i];
+        }
+      }
+      u.onstart = function() {
+        annyang.abort();    
+      };    
+      u.onend = function() {
+        annyang.start();    
+      };     
+      u.onerror = function(e) {         if (callback) {             callback(e);         }     };     
+      speechSynthesis.speak(u);
+    }
+  </script>
+
+</body>
+
+</html>
