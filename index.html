@@ -156,7 +156,8 @@
     var responses3 = { '*v': answers3 }
     var responses4 = { '*a': answers3a }
     var responses5 = { 'Yes': answers3y, 'Yeah': answers3y, 'sure': answers3y, 'continue': answers3y,'continue *v': answers3y, '*v continue': answers3y, 'No': answers2n, 'Nope': answers2n, '*v No': answers2n, 'No *v': answers2n }
-    var responses6 = { 'agree': answers4, 'disagree': answers4, '*v agree': answers4, '*v disagree': answers4, 'undecided': answers4 }
+    var responses6 = { 'agree': answers4y, 'disagree': answers4, '*v agree': answers4y, '*v disagree': answers4, 'undecided': answers4 }
+    var responses7 = { '*c': answers4a }
 
     function answers1() {
       speak("Great. I have a few questions for you... Would you like to continue ?");
@@ -195,8 +196,20 @@
       annyang.addCommands(responses6);
     }
 
+    function answers4y() {
+      speak("Great ! I agree with you. Tell me your email adress for a free coffee at starbucks.");
+      annyang.removeCommands(['agree', 'disagree', '*v agree', '*v disagree', 'undecided']);
+      annyang.addCommands(responses7);
+    }
+
+    function answers4a() {
+      speak("Thanks! Enjoy that free coffee");
+      annyang.removeCommands('*c');
+      stop();
+    }
+
     function answers4() {
-      speak("Thank you for your responses ! That is all for now");
+      speak("Too bad you disagree. Thank you for your responses ! That is all for now. Goodbye.");
       annyang.removeCommands(['agree', 'disagree', '*v agree', '*v disagree', 'undecided']);
       stop();
     }
